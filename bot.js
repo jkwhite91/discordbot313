@@ -6,27 +6,6 @@ const {Pool, Client } = require("pg");
 // Creates a new instance module
 const bot = new Discord.Client();
 
-
-/******************* Setup DB connection ***********************************/
-var pool = new Pool({
-    host: "localhost",
-    user: "Bob",
-    password: "Jiafb914",
-    database: "postgres",
-    schema: "botserver"
-});
-
-var client = new Client({
-  host: "localhost",
-  user: "Bob",
-  password: "Jiafb914",
-  database: "postgres",
-  schema: "botserver"
-});
-client.connect();
-
-/*************************** End DB connection setup **************************/
-
 //states that teh bot is ready and running
 bot.on('ready', function() {
   console.log(`Logged in as ${bot.user.tag}!`);
@@ -78,11 +57,11 @@ bot.on('message', function(msg) {
   if (msg.author.bot) return;
 
   // Bot only replys if it starts with the prefix
-  if (!msg.content.startsWith(config.prefix)) return;
+  if (!msg.content.startsWith(prefix)) return;
 
   // Command controls the command with the prefix
   let command = msg.content.split(" ")[0];
-  command = command.slice(config.prefix.length);
+  command = command.slice(prefix.length);
 
   // Args controls any additonal arguments
   let args = msg.content.split(" ").slice(1);
@@ -124,4 +103,4 @@ bot.on("guildMember", function(member){
     channel.send("Welcome to the guild, ${user.username}");
 });
 
-bot.login(process.env.config.token);
+bot.login(process.env.BOT_TOKEN);
